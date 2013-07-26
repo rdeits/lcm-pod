@@ -38,7 +38,7 @@ configure: $(UNZIP_DIR)/configure
 		PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(BUILD_PREFIX)/lib/pkgconfig \
 		CFLAGS="-I$(BUILD_PREFIX)/include $(OPT_FLAGS) $(CFLAGS)" \
 		CXXFLAGS="-I$(BUILD_PREFIX)/include $(OPT_FLAGS) $(CXXFLAGS)" \
-		LDFLAGS="-L$(BUILD_PREFIX)/lib -Wl,-R$(BUILD_PREFIX)/lib $(LDFLAGS)"
+		LDFLAGS="-L$(BUILD_PREFIX)/lib $(LDFLAGS)"
 
 $(UNZIP_DIR)/configure:
 	@echo "\nDownloading lcm \n\n"
