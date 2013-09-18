@@ -52,6 +52,3 @@ clean:
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) clean uninstall; fi
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) distclean; fi
 
-# other (custom) targets are passed through to the cmake-generated Makefile 
-%::
-	$(MAKE) -C pod-build $@
