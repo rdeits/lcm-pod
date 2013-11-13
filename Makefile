@@ -47,6 +47,8 @@ $(UNZIP_DIR)/configure:
 	tar -xzvf $(DL_FILE) && rm $(DL_FILE)
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
+install_prereqs_homebrew :
+	brew install glib
 
 clean:
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) clean uninstall; fi
