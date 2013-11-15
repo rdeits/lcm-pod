@@ -48,7 +48,7 @@ $(UNZIP_DIR)/configure:
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
 install_prereqs_homebrew :
-	brew install glib
+	brew install glib coreutils
 
 clean:
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) clean uninstall; fi
