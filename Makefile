@@ -50,6 +50,9 @@ $(UNZIP_DIR)/configure:
 install_prereqs_homebrew :
 	brew install glib coreutils
 
+install_prereqs_cygwin:
+	cygwin-setup -q -P wget libglib2.0-devel
+
 clean:
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) clean uninstall; fi
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) distclean; fi
