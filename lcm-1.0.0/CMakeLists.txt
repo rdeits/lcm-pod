@@ -4,12 +4,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # set up pods
 set(POD_NAME lcm)
+set(LCM_VERSION 1.0.0)
 include(cmake/pods.cmake)
-
-# set up Java, use a target of 1.6
-find_package(Java REQUIRED)
-include(UseJava)
-set(CMAKE_JAVA_COMPILE_FLAGS ${CMAKE_JAVA_COMPILE_FLAGS} -source 6 -target 6)
 
 if (CMAKE_COMPILER_IS_GNUCC)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wreturn-type -Wuninitialized -Wunused-variable") # -Wunused-parameter")
@@ -27,15 +23,36 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wreturn-type -Wuninitialized -Wunused-variable") # -Wunused-parameter")
 
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
- if (APPLE)  # this was a step towards getting things to work with
-#   clang on mac, but ultimately we didn't get there...   (but I would
-#   be worried about sharing pointers between objects compiled against
-#   different c++ libs, so removing it)
-#    # http://stackoverflow.com/questions/13445742/apple-and-shared-ptr
+  if (APPLE)  
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")  
   endif()
 endif()
 
 enable_testing()
 include(CTest)
+
+#add_subdirectory(m4)
+add_subdirectory(lcm)
+add_subdirectory(liblcm-test)
+add_subdirectory(lcmgen)
+add_subdirectory(lcm-logger)
+#add_subdirectory(po)
+#add_subdirectory(m4macros)
+
+# set up Java, use a target of 1.6
+find_package(Java)
+if (JAVA_FOUND)
+   include(UseJava)
+   set(CMAKE_JAVA_COMPILE_FLAGS ${CMAKE_JAVA_COMPILE_FLAGS} -source 1.5 -target 1.5)
+
+  add_subdirectory(lcm-java)
+endif()
+
+# todo: add "if python" logic
+#add_subdirectory(lcm-python)
+
+# todo: add "if lua" logic
+#add_subdirectory(lcm-lua)
+
+
 

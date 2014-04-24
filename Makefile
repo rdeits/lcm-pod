@@ -2,13 +2,6 @@ DL_FILE := lcm-1.0.0.tar.gz
 DL_LINK := http://lcm.googlecode.com/files/
 UNZIP_DIR := lcm-1.0.0
 
-all: $(UNZIP_DIR)/Makefile
-	$(MAKE) -C $(UNZIP_DIR) install
-
-# Default to a less-verbose build.  If you want all the gory compiler output,
-# run "make VERBOSE=1"
-$(VERBOSE).SILENT:
-
 # Figure out where to build the software.
 #   Use BUILD_PREFIX if it was passed in.
 #   If not, search up to four parent directories for a 'build' directory.
@@ -20,27 +13,24 @@ endif
 # create the build directory if needed, and normalize its path name
 BUILD_PREFIX:=$(shell mkdir -p $(BUILD_PREFIX) && cd $(BUILD_PREFIX) && echo `pwd`)
 
-# Default to a release build.  If you want to enable debugging flags, run
-# "make BUILD_TYPE=Debug"
-OPT_FLAGS := #-g -O2
-ifeq "$(BUILD_TYPE)" "Debug"
-OPT_FLAGS = -g
-endif
+# note: this is evaluated at run time, so must be in the pod-build directory
+CMAKE_MAKE_PROGRAM="`cmake -LA -N | grep CMAKE_MAKE_PROGRAM | cut -d "=" -f2`"
 
-$(UNZIP_DIR)/Makefile:
+all: pod-build/Makefile
+	cd pod-build && $(CMAKE_MAKE_PROGRAM) all install 
+
+pod-build/Makefile:
 	$(MAKE) configure
 
 .PHONY: configure
-configure: $(UNZIP_DIR)/CMakeLists.txt
+configure: 
+	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
+
 	# create the temporary build directory if needed
 	@mkdir -p pod-build
 
 	# run CMake to generate and configure the build scripts
 	@cd pod-build && cmake -DCMAKE_INSTALL_PREFIX=$(BUILD_PREFIX) \
-		-DBUILD_SHARED_LIBS=on \
-                -DINSTALL_LIBS=on \
-		-DBUILD_DEMOS=off \
-		-DUSE_DOUBLE_PRECISION=on \
 		-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ../$(UNZIP_DIR) 
 
 install_prereqs_homebrew :
@@ -50,3 +40,10 @@ clean:
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) clean uninstall; fi
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) distclean; fi
 
+# other (custom) targets are passed through to the cmake-generated Makefile 
+%::
+	cd pod-build && $(CMAKE_MAKE_PROGRAM) $@
+
+# Default to a less-verbose build.  If you want all the gory compiler output,
+# run "make VERBOSE=1"
+$(VERBOSE).SILENT:
