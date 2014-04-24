@@ -31,22 +31,17 @@ $(UNZIP_DIR)/Makefile:
 	$(MAKE) configure
 
 .PHONY: configure
-configure: $(UNZIP_DIR)/configure
-	# run configure
-	@cd $(UNZIP_DIR)  && \
-		./configure --prefix=$(BUILD_PREFIX) \
-		INSTALL="`which install` -c -C" \
-		PKG_CONFIG_PATH=$(PKG_CONFIG_PATH):$(BUILD_PREFIX)/lib/pkgconfig \
-		CFLAGS="-I$(BUILD_PREFIX)/include $(OPT_FLAGS) $(CFLAGS)" \
-		CXXFLAGS="-I$(BUILD_PREFIX)/include $(OPT_FLAGS) $(CXXFLAGS)" \
-		LDFLAGS="-L$(BUILD_PREFIX)/lib $(LDFLAGS)"
+configure: $(UNZIP_DIR)/CMakeLists.txt
+	# create the temporary build directory if needed
+	@mkdir -p pod-build
 
-$(UNZIP_DIR)/configure:
-	@echo "\nDownloading lcm \n\n"
-	wget $(DL_LINK)/$(DL_FILE)
-	@echo "\nunzipping to $(UNZIP_DIR) \n\n"
-	tar -xzvf $(DL_FILE) && rm $(DL_FILE)
-	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
+	# run CMake to generate and configure the build scripts
+	@cd pod-build && cmake -DCMAKE_INSTALL_PREFIX=$(BUILD_PREFIX) \
+		-DBUILD_SHARED_LIBS=on \
+                -DINSTALL_LIBS=on \
+		-DBUILD_DEMOS=off \
+		-DUSE_DOUBLE_PRECISION=on \
+		-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ../$(UNZIP_DIR) 
 
 install_prereqs_homebrew :
 	brew install glib coreutils
