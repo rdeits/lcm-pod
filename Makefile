@@ -13,11 +13,15 @@ endif
 # create the build directory if needed, and normalize its path name
 BUILD_PREFIX:=$(shell mkdir -p $(BUILD_PREFIX) && cd $(BUILD_PREFIX) && echo `pwd`)
 
+ifeq "$(BUILD_TYPE)" ""
+BUILD_TYPE:=Release
+endif
+
 # note: this is evaluated at run time, so must be in the pod-build directory
-CMAKE_MAKE_PROGRAM="`cmake -LA -N | grep CMAKE_MAKE_PROGRAM | cut -d "=" -f2`"
+CMAKE_MAKE_PROGRAM=`cmake -LA -N | grep MAKECOMMAND | cut -d "=" -f2- | sed -e 's/$${CTEST_CONFIGURATION_TYPE}/$(BUILD_TYPE)/' -e 's|\\\\|\/|g'`
 
 all: pod-build/Makefile
-	cd pod-build && $(CMAKE_MAKE_PROGRAM) all install 
+	cd pod-build && $(CMAKE_MAKE_PROGRAM) #all install 
 
 pod-build/Makefile:
 	$(MAKE) configure
