@@ -27,6 +27,11 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")  
   endif()
 endif()
+if (WIN32)
+  add_definitions(/TP)  # compile .c as .cpp for MSVC
+  add_subdirectory(WinSpecific)
+endif()
+
 
 enable_testing()
 include(CTest)

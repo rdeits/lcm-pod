@@ -7,6 +7,9 @@ add_library(lcm
 	lcm_tcpq.c 
 	ringbuffer.c
 	eventlog.c )
+#if (WIN32)
+#   set_source_files_properties(lcm.c lcm_udp.c lcm_file.c lcm_tcpq.c ringbuffer.c eventlog.c PROPERTIES COMPILE_FLAGS /TP)
+#endif()
 
 set(REQUIRED_LIBS glib-2.0 gthread-2.0)
 pods_use_pkg_config_packages(lcm ${REQUIRED_LIBS})
