@@ -49,7 +49,7 @@ $(UNZIP_DIR)/configure:
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
 install_prereqs_homebrew :
-	brew install wget glib coreutils
+	brew install wget xz glib coreutils
 
 install_prereqs_cygwin:
 	cygwin-setup -q -P gcc-g++ wget libglib2.0-devel
