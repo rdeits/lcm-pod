@@ -48,6 +48,9 @@ $(UNZIP_DIR)/configure:
 	tar -xzvf $(DL_FILE) && rm $(DL_FILE)
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
+install_prereqs_ubuntu:
+	apt-get install libglib2.0-dev
+
 install_prereqs_homebrew :
 	brew install wget xz glib coreutils
 
