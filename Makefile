@@ -43,7 +43,7 @@ configure: $(UNZIP_DIR)/configure
 
 $(UNZIP_DIR)/configure:
 	@echo "\nDownloading lcm \n\n"
-	wget $(DL_LINK)/$(DL_FILE)
+	wget -T 60 $(DL_LINK)/$(DL_FILE)
 	@echo "\nunzipping to $(UNZIP_DIR) \n\n"
 	tar -xzvf $(DL_FILE) && rm $(DL_FILE)
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
