@@ -48,16 +48,6 @@ $(UNZIP_DIR)/configure:
 	tar -xzvf $(DL_FILE) && rm $(DL_FILE)
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
-install_prereqs_ubuntu:
-	apt-get install libglib2.0-dev
-
-install_prereqs_homebrew :
-	brew install wget xz glib coreutils
-
-install_prereqs_cygwin:
-	cygwin-setup -q -P gcc-g++ wget libglib2.0-devel
-
 clean:
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) clean uninstall; fi
 	-if [ -e $(UNZIP_DIR)/Makefile ]; then $(MAKE) -C $(UNZIP_DIR) distclean; fi
-
