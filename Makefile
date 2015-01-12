@@ -1,6 +1,6 @@
-DL_FILE := lcm-1.0.0.tar.gz
-DL_LINK := http://lcm.googlecode.com/files/
-UNZIP_DIR := lcm-1.0.0
+DL_FILE := lcm-1.2.0.zip
+DL_LINK := https://github.com/lcm-proj/lcm/releases/download/v1.2.0/
+UNZIP_DIR := lcm-1.2.0
 
 all: $(UNZIP_DIR)/Makefile
 	$(MAKE) -C $(UNZIP_DIR) install
@@ -45,7 +45,7 @@ $(UNZIP_DIR)/configure:
 	@echo "\nDownloading lcm \n\n"
 	wget -T 60 $(DL_LINK)/$(DL_FILE)
 	@echo "\nunzipping to $(UNZIP_DIR) \n\n"
-	tar -xzvf $(DL_FILE) && rm $(DL_FILE)
+	unzip $(DL_FILE) && rm $(DL_FILE)
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
 clean:
