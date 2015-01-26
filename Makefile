@@ -1,6 +1,6 @@
-DL_FILE := lcm-1.2.0.zip
-DL_LINK := https://github.com/lcm-proj/lcm/releases/download/v1.2.0/
-UNZIP_DIR := lcm-1.2.0
+DL_FILE := lcm-1.2.1.zip
+DL_LINK := https://github.com/lcm-proj/lcm/releases/download/v1.2.1/
+UNZIP_DIR := lcm-1.2.1
 
 all: $(UNZIP_DIR)/Makefile
 	$(MAKE) -C $(UNZIP_DIR) install
