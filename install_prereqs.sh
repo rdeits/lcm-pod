@@ -6,7 +6,7 @@ case $1 in
   ("macports")
     ;;
   ("ubuntu")
-    apt-get install libglib2.0-dev ;;
+    apt-get install libglib2.0-dev openjdk-6-jdk ;;
   ("cygwin")
     cygwin-setup -q -P gcc-g++ wget libglib2.0-devel ;;
   (*)
