@@ -15,7 +15,7 @@ static void
 on_buftest(const lcm_recv_buf_t* rbuf, const char* channel, void* user_data)
 {
     num_received++;
-    msg_id = atoi(rbuf->data);
+    msg_id = atoi((const char*)rbuf->data);
     printf("received msg id: %4d (recv count: %4d)\n", msg_id, num_received);
     if(num_received % 10 == 0) {
         g_usleep(1000 * 1000);

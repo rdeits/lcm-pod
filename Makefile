@@ -17,11 +17,9 @@ ifeq "$(BUILD_TYPE)" ""
 BUILD_TYPE:=Release
 endif
 
-# note: this is evaluated at run time, so must be in the pod-build directory
-CMAKE_MAKE_PROGRAM=`cmake -LA -N | grep MAKECOMMAND | cut -d "=" -f2- | sed -e 's/$${CTEST_CONFIGURATION_TYPE}/$(BUILD_TYPE)/' -e 's|\\\\|\/|g'`
 
 all: pod-build/Makefile
-	cd pod-build && $(CMAKE_MAKE_PROGRAM) #all install 
+	cmake --build pod-build --config $(BUILD_TYPE) --target install
 
 pod-build/Makefile:
 	$(MAKE) configure

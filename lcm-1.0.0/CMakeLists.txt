@@ -30,11 +30,15 @@ endif()
 if (WIN32)
   add_definitions(/TP)  # compile .c as .cpp for MSVC
   add_subdirectory(WinSpecific)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/include)
+  include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/getopt)
 endif()
 
 
 enable_testing()
 include(CTest)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 #add_subdirectory(m4)
 add_subdirectory(lcm)
