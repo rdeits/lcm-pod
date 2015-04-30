@@ -13,12 +13,6 @@ extern "C" {
 
 #define LCM_MAX_CHANNEL_NAME_LENGTH 63
 
-#ifdef WIN32
-#define LCM_API_FUNCTION __declspec(dllexport)
-#else
-#define LCM_API_FUNCTION
-#endif
-
 /**
  * @defgroup LcmC C API Reference
  *

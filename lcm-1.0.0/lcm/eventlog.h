@@ -8,13 +8,15 @@
 extern "C" {
 #endif
 
-#ifndef LCM_API_FUNCTION
-#ifdef WIN32
-#define LCM_API_FUNCTION __declspec(dllexport)
+#if defined(WIN32) || defined(WIN64)
+  #if defined(lcm_EXPORTS)
+    #define LCM_API_FUNCTION __declspec( dllexport )
+  #else
+    #define LCM_API_FUNCTION __declspec( dllimport )
+  #endif
 #else
-#define LCM_API_FUNCTION
-#endif // WIN32
-#endif // LCM_API_FUNCTION
+  #define LCM_API_FUNCTION
+#endif
 
 /**
  * @defgroup LcmC_lcm_eventlog_t lcm_eventlog_t

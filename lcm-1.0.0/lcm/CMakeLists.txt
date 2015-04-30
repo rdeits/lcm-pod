@@ -1,15 +1,17 @@
 
- 
-add_library(lcm
+
+add_library(lcm SHARED
 	lcm.c 
 	lcm_udp.c 
 	lcm_file.c 
 	lcm_tcpq.c 
 	ringbuffer.c
 	eventlog.c )
-#if (WIN32)
-#   set_source_files_properties(lcm.c lcm_udp.c lcm_file.c lcm_tcpq.c ringbuffer.c eventlog.c PROPERTIES COMPILE_FLAGS /TP)
-#endif()
+if (WIN32)
+   add_subdirectory(windows)
+   target_link_libraries(lcm lcm_windows)
+   set_source_files_properties(lcm.c lcm_udp.c lcm_file.c lcm_tcpq.c ringbuffer.c eventlog.c PROPERTIES COMPILE_FLAGS /TP)
+endif()
 
 set(REQUIRED_LIBS glib-2.0 gthread-2.0)
 pods_use_pkg_config_packages(lcm ${REQUIRED_LIBS})
