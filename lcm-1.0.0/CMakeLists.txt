@@ -28,7 +28,7 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   endif()
 endif()
 if (WIN32)
-  add_definitions(/TP)  # compile .c as .cpp for MSVC
+#  add_definitions(/TP)  # compile .c as .cpp for MSVC
   add_subdirectory(WinSpecific)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/include)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/getopt)

@@ -5,6 +5,10 @@
 #include <glib.h>
 #include <lcm/lcm.h>
 
+#ifdef WIN32
+  #define snprintf _snprintf
+#endif
+
 int main(int argc, char** argv)
 {
     lcm_t* lcm = lcm_create(NULL);
