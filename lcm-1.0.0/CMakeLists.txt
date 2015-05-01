@@ -27,12 +27,36 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")  
   endif()
 endif()
+
 if (WIN32)
 #  add_definitions(/TP)  # compile .c as .cpp for MSVC
   add_subdirectory(WinSpecific)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/include)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/getopt)
 endif()
+
+
+# glib and gthread
+set(GLIB_REQUIRED_LIBS glib-2.0 gthread-2.0)
+if (WIN32)
+  if (NOT DEFINED ENV{GTK_PATH})
+    message(FATAL_ERROR "ERROR: you must set the GTK_PATH environment variable")
+  endif()
+  include_directories($ENV{GTK_PATH}/include/glib-2.0)
+  include_directories($ENV{GTK_PATH}/lib/glib-2.0/include)
+
+  set(GLIB_LDFLAGS -LIBPATH:$ENV{GTK_PATH}/lib gthread-2.0.lib glib-2.0.lib intl.lib ws2_32.lib ole32.lib winmm.lib shlwapi.lib)
+  install(FILES $ENV{GTK_PATH}/bin/libglib-2.0-0.dll RENAME glib-2.0.dll DESTINATION lib)
+  install(FILES $ENV{GTK_PATH}/bin/libgthread-2.0-0.dll RENAME gthread-2.0.dll DESTINATION lib)
+else()
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(GLIB glib-2.0 gthread-2.0)
+  if (NOT GLIB_FOUND)
+     message(FATAL_ERROR "ERROR: could not find glib-2.0 and/or gthread-2.0")
+  endif()
+  include_directories(${GLIB_INCLUDE_DIRS})
+endif()
+		
 
 
 enable_testing()

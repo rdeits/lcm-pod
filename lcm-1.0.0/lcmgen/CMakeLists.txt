@@ -28,6 +28,6 @@ if (WIN32)
 		       PROPERTIES COMPILE_FLAGS /TP)
 endif()
 
-pods_use_pkg_config_packages(lcm-gen glib-2.0)
+target_link_libraries(lcm-gen ${GLIB_LDFLAGS})
 
 pods_install_executables(lcm-gen)
