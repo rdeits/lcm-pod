@@ -53,6 +53,8 @@ int fcntl (int fd, int flag1, ...);
 
 size_t recvmsg ( SOCKET s, struct msghdr *msg, int flags );
 size_t sendmsg ( SOCKET s, const struct msghdr *msg, int flags );
+
+  int gettimeofday(struct timeval *tv, struct timezone *tz);		// tz is not used in any lcm code
 }
 
 #endif
