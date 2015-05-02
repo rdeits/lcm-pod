@@ -35,8 +35,6 @@ if (WIN32)
   include_directories(${CMAKE_CURRENT_SOURCE_DIR}/WinSpecific/getopt)
 endif()
 
-include(cmake/glib.cmake)
-
 enable_testing()
 include(CTest)
 
