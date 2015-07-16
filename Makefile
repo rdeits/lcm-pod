@@ -2,19 +2,34 @@ DL_FILE := lcm-1.0.0.tar.gz
 DL_LINK := http://lcm.googlecode.com/files/
 UNZIP_DIR := lcm-1.0.0
 
+BUILD_SYSTEM:=$(OS)
+ifeq ($(BUILD_SYSTEM),Windows_NT)
+BUILD_SYSTEM:=$(shell uname -o 2> NUL || echo Windows_NT) # set to Cygwin if appropriate
+else
+BUILD_SYSTEM:=$(shell uname -s)
+endif
+BUILD_SYSTEM:=$(strip $(BUILD_SYSTEM))
+
 # Figure out where to build the software.
 #   Use BUILD_PREFIX if it was passed in.
 #   If not, search up to four parent directories for a 'build' directory.
 #   Otherwise, use ./build.
+ifeq ($(BUILD_SYSTEM), Windows_NT)
 ifeq "$(BUILD_PREFIX)" ""
-BUILD_PREFIX:=$(shell for pfx in .. ../.. ../../.. ../../../..; do d=`pwd`/$$pfx/build;\
+BUILD_PREFIX:=$(shell (for %%x in (. .. ..\.. ..\..\.. ..\..\..\..) do ( if exist %cd%\%%x\build ( echo %cd%\%%x\build & exit ) )) & echo %cd%\build )
+endif
+# don't clean up and create build dir as I do in linux.  instead create it during configure.
+else
+ifeq "$(BUILD_PREFIX)" ""
+BUILD_PREFIX:=$(shell for pfx in ./ .. ../.. ../../.. ../../../..; do d=`pwd`/$$pfx/build;\
                if [ -d $$d ]; then echo $$d; exit 0; fi; done; echo `pwd`/build)
 endif
 # create the build directory if needed, and normalize its path name
 BUILD_PREFIX:=$(shell mkdir -p $(BUILD_PREFIX) && cd $(BUILD_PREFIX) && echo `pwd`)
+endif
 
-ifeq "$(BUILD_TYPE)" ""
-BUILD_TYPE:=Release
+ifeq "$(BUILD_SYSTEM)" "Cygwin"
+  BUILD_PREFIX:=$(shell cygpath -m $(BUILD_PREFIX))
 endif
 
 
