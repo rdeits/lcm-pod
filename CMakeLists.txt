@@ -26,7 +26,8 @@ ExternalProject_Add(lcm
  	INSTALL_COMMAND ""
  	)
 
-#ExternalProject_Get_Property(lcm CONFIGURE_COMMAND)
-#message(FATAL_ERROR ${CONFIGURE_COMMAND})
 
-add_custom_target(install)  # define a blank install target that does nothing (just so "make install doesn't fail")
+# todo: make clean shouldn't zap the download (set DOWNLOAD_DIR, etc)
+# todo: don't build in source
+# todo: respect PKG_CONFIG_PATH, etc as commented out above
+
