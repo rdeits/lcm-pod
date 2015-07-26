@@ -29,7 +29,8 @@ add_jar(lcm-java
     lcm/spy/SpyPlugin.java 
     lcm/spy/LCMTypeDatabase.java 
     lcm/spy/ObjectPanel.java 
-    lcm/spy/ChannelData.java )
+    lcm/spy/ChannelData.java 
+    OUTPUT_NAME lcm)
 
 pods_install_jars(lcm-java)
 
