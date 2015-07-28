@@ -8,6 +8,18 @@ set(LCM_VERSION 1.0.0)
 include(cmake/pods.cmake)
 
 if (CMAKE_COMPILER_IS_GNUCC)
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wreturn-type -Wuninitialized -Wunused-variable") # -Wunused-parameter")
+
+   execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+                OUTPUT_VARIABLE GCC_VERSION)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wreturn-type -Wuninitialized -Wunused-variable") # -Wunused-parameter")
+
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+endif()
+
+if (CMAKE_COMPILER_IS_GNUCC)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wreturn-type -Wuninitialized -Wunused-variable") # -Wunused-parameter")
 
    execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
@@ -23,8 +35,8 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wreturn-type -Wuninitialized -Wunused-variable") # -Wunused-parameter")
 
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-  if (APPLE)  
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")  
+  if (APPLE)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
 endif()
 
