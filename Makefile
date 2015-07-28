@@ -48,7 +48,7 @@ configure:
 
 	# run CMake to generate and configure the build scripts
 	# (note: i'm not passing the CMAKE_FLAGS here because it appears i need to use the 32-bit generator even on my 64-bit machine)
-	@cd pod-build && cmake -DCMAKE_INSTALL_PREFIX="$(BUILD_PREFIX)" \
+	@cd pod-build && cmake $(CMAKE_FLAGS) -DCMAKE_INSTALL_PREFIX="$(BUILD_PREFIX)" \
 		-DCMAKE_BUILD_TYPE=$(BUILD_TYPE) ../$(UNZIP_DIR) 
 
 install_prereqs_homebrew :
