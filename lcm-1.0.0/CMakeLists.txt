@@ -57,8 +57,10 @@ if (JAVA_FOUND)
   add_subdirectory(lcm-java)
 endif()
 
-# todo: add "if python" logic
-#add_subdirectory(lcm-python)
+find_package(PythonInterp)
+if (PYTHONINTERP_FOUND)
+  add_subdirectory(lcm-python)
+endif()
 
 # todo: add "if lua" logic
 #add_subdirectory(lcm-lua)
