@@ -34,7 +34,7 @@ endif
 
 
 all: pod-build/Makefile
-	cmake --build pod-build --config $(BUILD_TYPE)
+	cmake --build pod-build --config $(BUILD_TYPE) --target install
 	-mv $(BUILD_PREFIX)/share/java/lcm-java.jar $(BUILD_PREFIX)/share/java/lcm.jar  # the old version of cmake seem to not respect the OUTPUT_NAME field in add_jar
 
 pod-build/Makefile:
